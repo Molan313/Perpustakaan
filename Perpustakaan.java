@@ -1,19 +1,19 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Perpustakaan {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        int banyakBuku, opsi;
+        int opsi;
+        ArrayList<Buku> buku_buku = new ArrayList<>();
 
-        banyakBuku = banyakTambahanBuku(in);
+        banyakTambahanBuku(in, buku_buku);
 
-        if(banyakBuku == 0){
+        if(buku_buku.isEmpty()){
             System.out.println("Tidak ada buku yang ditambahkan");
         }
         else{
-            Buku[] buku_buku= new Buku[banyakBuku];
-            menambahBuku(banyakBuku, in, buku_buku);
             do{
                 opsi = menu(in);
                 opsiMenu(opsi, buku_buku, in);
@@ -34,6 +34,7 @@ public class Perpustakaan {
             }
             catch(Exception e){
                 System.err.println("Opsi yang dimasukkan harus berupa angka");
+                in.next();
             }
             if(opsi < 0 || opsi > 5){
                 System.err.println("Pilih opsi sesuai menu");
@@ -43,13 +44,13 @@ public class Perpustakaan {
         return opsi;
     }
 
-    public static void opsiMenu(int opsi, Buku[] listBuku, Scanner in){
+    public static void opsiMenu(int opsi, ArrayList<Buku> listBuku, Scanner in){
         switch (opsi) {
             case 1:
-                menambahBuku(opsi, in, listBuku);
+                banyakTambahanBuku(in, listBuku);
                 break;
             case 2:
-                if(listBuku == null || listBuku.length == 0){
+                if(listBuku.isEmpty()){
                     System.err.println("Tidak ada buku untuk ditampilkan");
                 }
                 else{
@@ -58,7 +59,7 @@ public class Perpustakaan {
                 break;
 
             case 3:
-                if(listBuku == null || listBuku.length == 0){
+                if(listBuku.isEmpty()){
                     System.err.println("Tidak ada buku yang dapat ditambahkan");
                 }
                 else{
@@ -68,7 +69,7 @@ public class Perpustakaan {
                 break;
 
             case 4:
-                if(listBuku == null || listBuku.length == 0){
+                if(listBuku.isEmpty()){
                     System.out.println("Tidak ada buku yang dapat dikurangi");
                 }
                 else{
@@ -87,20 +88,20 @@ public class Perpustakaan {
                 break;
         }
 
-        if(opsi != 0){
+        if(opsi != 5){
             System.out.println("Tekan Enter untuk kembali ke menu");
             in.nextLine();
             in.nextLine();
         }
     }
 
-    public static void displayBuku(Buku[] buku_buku){
+    public static void displayBuku(ArrayList<Buku> buku_buku){
         for(Buku b : buku_buku){
             System.out.println(b + "\n");
         }
     }
 
-    public static int banyakTambahanBuku(Scanner in){
+    public static void banyakTambahanBuku(Scanner in, ArrayList<Buku> buku_buku){
         int tambahanBuku = -1;
         do{
             try{
@@ -115,10 +116,12 @@ public class Perpustakaan {
                 in.next();
             }
         }while(tambahanBuku < 0);
-        return tambahanBuku;
+        if(tambahanBuku > 0){
+            menambahBuku(tambahanBuku, in, buku_buku);
+        }
     }
 
-    public static void menambahBuku(int banyakBuku, Scanner in, Buku[] buku_buku){
+    public static void menambahBuku(int banyakBuku, Scanner in, ArrayList<Buku> buku_buku){
         int opsiBuku = 0;
         do{
             System.out.println("Pilih buku yang ingin ditambahkan: ");
@@ -152,7 +155,7 @@ public class Perpustakaan {
         
     }
 
-    public static void menambahBukuFiksi(int banyakBuku, Scanner in, Buku[] buku_buku){
+    public static void menambahBukuFiksi(int banyakBuku, Scanner in, ArrayList<Buku> buku_buku){
         for(int i = 0; i < banyakBuku; i++){
             in.nextLine();
             int jumlahBuku = 0;
@@ -237,7 +240,7 @@ public class Perpustakaan {
 
             while (true) {
                 try{System.out.println("\nMasukkan progres dari Buku Fiksi ke-" + (i+1) + "\n(Input berupa true untuk buku yang telah tamat dan false buku series yang masih on going)");
-                progresCerita = in.nextBoolean();
+                statusBuku = in.nextBoolean();
                 break;
             }
                 catch(Exception e){
@@ -245,11 +248,11 @@ public class Perpustakaan {
                     in.next();
                 }           
             }
-        buku_buku[i] = new BukuFiksi(namaBuku, nomorBuku, penulisBuku, hargaBuku, jumlahBuku, jumlahHalaman, statusBuku, jenisBuku, genreBuku, progresCerita); 
+        buku_buku.add(new BukuFiksi(namaBuku, nomorBuku, penulisBuku, hargaBuku, jumlahBuku, jumlahHalaman, statusBuku, jenisBuku, genreBuku, progresCerita)); 
         }
     }
 
-    public static void menambahBukuNonFiksi(int banyakBuku, Scanner in, Buku[] buku_buku){
+    public static void menambahBukuNonFiksi(int banyakBuku, Scanner in, ArrayList<Buku> buku_buku){
         for(int i = 0; i < banyakBuku; i++){
             in.nextLine();
             int jumlahBuku = 0;
@@ -331,22 +334,22 @@ public class Perpustakaan {
                 }           
             }
 
-        buku_buku[i] = new BukuNonFiksi(namaBuku, nomorBuku, penulisBuku, hargaBuku, jumlahBuku, jumlahHalaman, statusBuku, jenisBuku, bidangBuku); 
+        buku_buku.add(new BukuNonFiksi(namaBuku, nomorBuku, penulisBuku, hargaBuku, jumlahBuku, jumlahHalaman, statusBuku, jenisBuku, bidangBuku)); 
         }
     }
 
-    public static int nomorBuku(Buku[] buku_buku, Scanner in){
+    public static int nomorBuku(ArrayList<Buku> buku_buku, Scanner in){
         int nomorBuku = -1;
         System.out.println("Pilih buku yang ingin diperbarui ");
-        for(int i = 0; i< buku_buku.length; i++){
-            System.out.println((i+1) + ". " + buku_buku[i].getNamaBuku());
+        for(int i = 0; i< buku_buku.size(); i++){
+            System.out.println((i+1) + ". " + buku_buku.get(i).getNamaBuku());
         }
 
         do{
             try{
-                System.out.println("Masukkan nomor buku dari 1 sampai "+ buku_buku.length + " ");
+                System.out.println("Masukkan nomor buku dari 1 sampai "+ buku_buku.size() + " ");
                 nomorBuku = in.nextInt();
-                if(nomorBuku < 1 || nomorBuku > buku_buku.length){
+                if(nomorBuku < 1 || nomorBuku > buku_buku.size()){
                     System.err.println("Masukkan sesuai nomor yang ada");
                 }
             }
@@ -355,19 +358,19 @@ public class Perpustakaan {
                 in.next();
             }
 
-        }while(nomorBuku < 1 || nomorBuku > buku_buku.length);
+        }while(nomorBuku < 1 || nomorBuku > buku_buku.size());
 
         return nomorBuku - 1;
     }
 
-    public static void tambahStok(Buku[] buku_buku, Scanner in){
+    public static void tambahStok(ArrayList<Buku> buku_buku, Scanner in){
         int nomorBuku= nomorBuku(buku_buku, in);
         int jumlahBaru =-1 ;
-        if (buku_buku[nomorBuku].getStatusBuku() == false){
+        if (!buku_buku.get(nomorBuku).getStatusBuku()){
             System.err.println("Stok buku tidak dapat ditambahkan karena buku ini sudah tidak diproduksi");
             nomorBuku(buku_buku, in);
         }
-        else if(buku_buku[nomorBuku].getStatusBuku() == true){
+        else{
             do{
                 try{
                     System.out.println("Banyak stok yang ditambahkan\t: ");
@@ -381,28 +384,28 @@ public class Perpustakaan {
                     in.next();
                 }
             }while(jumlahBaru < 0);
-            buku_buku[nomorBuku].TambahBuku(jumlahBaru); 
+            buku_buku.get(nomorBuku).TambahBuku(jumlahBaru); 
         }
     }
 
-    public static void kurangiStok(Buku[] buku_buku, Scanner in){
+    public static void kurangiStok(ArrayList<Buku> buku_buku, Scanner in){
         int nomorBuku = nomorBuku(buku_buku, in);
         int jumlahBaru = -1;
         do{
             try{
                 System.out.println("Banyak stok yang dikurangi\t: ");
                 jumlahBaru = in.nextInt();
-                if (jumlahBaru < 0 || jumlahBaru > buku_buku[nomorBuku].getJumlahBuku()){
-                    System.err.println("Jumlah tidak boleh kurang dari 0 dan tidak boleh melebih stok, stok "+ buku_buku[nomorBuku].getJumlahBuku());
+                if (jumlahBaru < 0 || jumlahBaru > buku_buku.get(nomorBuku).getJumlahBuku()){
+                    System.err.println("Jumlah tidak boleh kurang dari 0 dan tidak boleh melebih stok, stok "+ buku_buku.get(nomorBuku).getJumlahBuku());
                 }
             }
             catch(Exception e){
                 System.err.println("Input harus berupa angka");
                 in.next();
             }
-        }while(jumlahBaru < 0 || jumlahBaru > buku_buku[nomorBuku].getJumlahBuku());
+        }while(jumlahBaru < 0 || jumlahBaru > buku_buku.get(nomorBuku).getJumlahBuku());
 
-        buku_buku[nomorBuku].KurangBuku(jumlahBaru);
+        buku_buku.get(nomorBuku).KurangBuku(jumlahBaru);
     }
 
 }

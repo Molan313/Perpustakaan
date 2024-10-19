@@ -3,8 +3,6 @@ public class BukuFiksi extends Buku{
     private String genreBuku;
     private boolean progresCerita = true;
 
-    BukuFiksi(){
-    };
 
     BukuFiksi(String nama, String nomor, String penulis, double harga, int qty, int halaman, boolean status, String jenis, String genre, boolean progres){
         super(nama, nomor, penulis, harga, qty, halaman, status);

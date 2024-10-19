@@ -2,9 +2,6 @@ public class BukuNonFiksi extends Buku{
     private String jenisBuku;
     private String bidangBuku;
 
-    BukuNonFiksi(){
-    };
-
     BukuNonFiksi(String nama, String nomor, String penulis, double harga, int qty, int halaman, boolean status, String jenis, String bidang){
         super(nama, nomor, penulis, harga, qty, halaman, status);
         this.jenisBuku = jenis;
@@ -28,9 +25,8 @@ public class BukuNonFiksi extends Buku{
     }
 
     // buku nonfiksi dikenakan diskon 5%
-    @Override
     public double getnilaiBuku(){
-        return super.getnilaiBuku() - (super.getHargaBuku() * (5/100));
+        return super.getJumlahBuku() - (super.getHargaBuku() * (5.0/100));
     }
 
     @Override
