@@ -1,55 +1,73 @@
+// mengimport Scanner yang dapat digunakan untuk menyimpan input dari user
 import java.util.Scanner;
+// mengimport arraylist untuk memudahkan pemakaian array
 import java.util.ArrayList;
 
+// nama class nya perpustakaan
 public class Perpustakaan {
+    // memanggil fungsi main
     public static void main(String[] args) {
+        // menginisialisasi scanner terlebih dahulu agar dapat digunakan
         Scanner in = new Scanner(System.in);
-
+        // opsi untuk angka yang dipilih di menu
         int opsi;
+        // menginisialisasikan array
         ArrayList<Buku> buku_buku = new ArrayList<>();
-
+        // memanggil fungsi untuk mengetahui berapa banyak buku yang akan ditambahkan
         banyakTambahanBuku(in, buku_buku);
 
+        // jika input bukunya kosong, maka program akan mengeluarkan output tidak ada buku yang ditambahkan
         if(buku_buku.isEmpty()){
             System.out.println("Tidak ada buku yang ditambahkan");
         }
         else{
+            //jika inputnya lebih dari 0 maka program memanggil method menu dan memasukkan scanner kedalam method tersebut, method menu akan terus dimunculkan sampai user menginput angka 5
             do{
                 opsi = menu(in);
                 opsiMenu(opsi, buku_buku, in);
-            }while(opsi != 0);
+            }while(opsi != 5);
         }
-
+        // menutup scanner
         in.close();
     }
 
+    // fungsi untuk menampilkan menu awal yang dapat dipilih, mengembalikan angka opsi yang diinputkan usser untuk dipakai selanjutnya di method untuk mengeksekusi opsi menu
     public static int menu(Scanner in){
+        // inisialisasi awal -1
         int opsi = -1;
+        // melakukan looping terus menerus ketika opsi yang diinputkan user bernilai negatif ataupun lebih dari lima
         do{
+            // menambahkan handling error agar tipe data yang dapat dimasukkan hanyalah angka
             try{
                 System.out.println("Selamat Datang di Perpustakaan!!");
                 System.out.println("Pilih menu");
                 System.out.println("1. Tambah Buku\n2. Informasi buku\n3. Tambah stok buku\n4. Kurangi stok Buku\n5. Keluar");
+                // menyimpan integer dari input user
                 opsi = in.nextInt();
             }
+            // menampilkan pesan eror apabila input bukan angka
             catch(Exception e){
                 System.err.println("Opsi yang dimasukkan harus berupa angka");
                 in.next();
             }
+            // menampilkan pesan error ketika user tidak menginput sesuai opsi yang ada
             if(opsi < 0 || opsi > 5){
                 System.err.println("Pilih opsi sesuai menu");
             }
         }while(opsi < 0 || opsi > 5);
-
+        // mengembalikan nilai opsi
         return opsi;
     }
 
+    // mengeksekusi opsi menu yang diinput user, memerlukan opsi buku, array buku, dan scanner
     public static void opsiMenu(int opsi, ArrayList<Buku> listBuku, Scanner in){
         switch (opsi) {
             case 1:
+                // memanggil method untuk mengetahui banyak buku yang akan ditambahkan
                 banyakTambahanBuku(in, listBuku);
                 break;
             case 2:
+                // memanggil method untuk menampilkan buku jika buku ada
                 if(listBuku.isEmpty()){
                     System.err.println("Tidak ada buku untuk ditampilkan");
                 }
@@ -59,6 +77,7 @@ public class Perpustakaan {
                 break;
 
             case 3:
+                // memanggil method untuk menambahkan stok buku
                 if(listBuku.isEmpty()){
                     System.err.println("Tidak ada buku yang dapat ditambahkan");
                 }
