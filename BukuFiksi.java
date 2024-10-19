@@ -1,16 +1,16 @@
 public class BukuFiksi extends Buku{
     private String jenisBuku;
     private String genreBuku;
-    private boolean statusBuku = true;
+    private boolean progresCerita = true;
 
     BukuFiksi(){
     };
 
-    BukuFiksi(String nama, String nomor, String penulis, double harga, int qty, int halaman, boolean sampul, String jenis, String genre, boolean Status){
-        super(nama, nomor, penulis, harga, qty, halaman, sampul);
+    BukuFiksi(String nama, String nomor, String penulis, double harga, int qty, int halaman, boolean status, String jenis, String genre, boolean progres){
+        super(nama, nomor, penulis, harga, qty, halaman, status);
         this.jenisBuku = jenis;
         this.genreBuku = genre;
-        this.statusBuku = Status;
+        this.progresCerita = progres;
     }
 
     public String getJenisBuku(){
@@ -29,17 +29,17 @@ public class BukuFiksi extends Buku{
         this.genreBuku = genre;
     }
 
-    public boolean getStatusBuku(){
-        return statusBuku;
+    public boolean getProgresBuku(){
+        return progresCerita;
     }
 
-    public void setStatusBuku(boolean status){
-        this.statusBuku = status;
+    public void setStatusBuku(boolean progres){
+        this.progresCerita = progres;
     }
 
     @Override
     public String toString(){
-        String status = getStatusBuku()?"On Going":"Tamat";
-        return super.toString() + "Jenis Buku\t: " + getJenisBuku() + "\nGenre Buku\t: " + getGenreBuku() + "\nStatus Buku\t: " + status;
+        String progres = getProgresBuku()?"Tamat":"On Going";
+        return super.toString() + "\nJenis Buku\t: " + getJenisBuku() + "\nGenre Buku\t: " + getGenreBuku() + "\nProgres Cerita\t: " + progres;
     }
 }

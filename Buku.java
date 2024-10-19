@@ -7,19 +7,19 @@ public class Buku{
     private double hargaBuku;
     private int jumlahBuku;
     private int jumlahHalaman;
-    private boolean jenisSampul = true;
+    private boolean statusBuku = true;
     private double nilaiBuku;
     private static final DecimalFormat df = new DecimalFormat("#,###.00");
 
     // membuat constructor buku
     Buku(){};
-    Buku(String nama, String nomor, String penulis, double harga, int qty, int halaman, boolean sampul){
+    Buku(String nama, String nomor, String penulis, double harga, int qty, int halaman, boolean status){
         this.namaBuku = nama;
         this.nomorBuku = nomor;
         this.penulisBuku = penulis;
         this.hargaBuku = harga;
         this.jumlahBuku = qty;
-        this.jenisSampul = sampul;
+        this.statusBuku = status;
         this.jumlahHalaman = halaman;
     }
 
@@ -62,12 +62,12 @@ public class Buku{
     public void setHalamanBuku(int halaman){
         this.jumlahHalaman = halaman;
     }
-    public boolean getSampulBuku(){
-        return jenisSampul;
+    public boolean getStatusBuku(){
+        return statusBuku;
     }
 
-    public void setSampulBuku(boolean jenis){
-        this.jenisSampul = jenis;
+    public void setStatusBuku(boolean jenis){
+        this.statusBuku = jenis;
     }
 
     public double getHargaBuku(){
@@ -111,8 +111,8 @@ public class Buku{
     @Override
     public String toString(){
         String buku = "";
-        String status = getSampulBuku() ? "Hardcover" : "Softcover";
-        buku = "Informasi Buku\n" + "Nomor Buku\t: " + getNomorBuku() + "\nNama Buku\t: " + getNamaBuku() + "\nPenulis Buku\t: " + getPenulisBuku() + "\nHarga Buku\t: Rp " + df.format(getHargaBuku()) + "\nJumlah Buku\t: " + getJumlahBuku() + "\nJumlah Halaman\t: "+ getHalamanBuku() +" Halaman\nJenis Sampul\t: " + status + "\nNilai Buku\t: Rp" + df.format(getnilaiBuku());
+        String status = getStatusBuku() ? "Aktif" : "Nonaktif";
+        buku = "Informasi Buku\n" + "Nomor Buku\t: " + getNomorBuku() + "\nNama Buku\t: " + getNamaBuku() + "\nPenulis Buku\t: " + getPenulisBuku() + "\nHarga Buku\t: Rp " + df.format(getHargaBuku()) + "\nJumlah Buku\t: " + getJumlahBuku() + "\nJumlah Halaman\t: "+ getHalamanBuku() +" Halaman\nStatus Buku\t: " + status + "\nNilai Buku\t: Rp" + df.format(getnilaiBuku());
         return buku;
     };
 
