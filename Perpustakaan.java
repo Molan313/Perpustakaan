@@ -123,7 +123,7 @@ public class Perpustakaan {
         do{
             System.out.println("Pilih buku yang ingin ditambahkan: ");
             try{
-                System.out.println("1. Buku Fiksi\n2. Buku NonFiksi");
+                System.out.println("1. Buku Fiksi\n2.Buku NonFiksi");
                 opsiBuku = in.nextInt();
                 if(opsiBuku < 1 || opsiBuku > 2){
                     System.out.println("Input hanya boleh antara 1 dan 2");
